@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import Header from './components/Header'
 import './App.css'
 
 function App() {
@@ -6,13 +7,14 @@ function App() {
 
   return (
     <div className="App">
-      <header className="App-header">
-        <h1>Portfólio Ana</h1>
-        <p>Bem-vindo ao seu portfólio!</p>
+      <Header />
+      <main className="App-main">
+        <h2>Bem-vindo ao seu portfólio!</h2>
+        <p>Este é um projeto React configurado e pronto para desenvolvimento.</p>
         <button onClick={() => setCount((count) => count + 1)}>
           Contador: {count}
         </button>
-      </header>
+      </main>
     </div>
   )
 }
