@@ -33,13 +33,23 @@ export const scaleIn = {
 
 // Intersection Observer para animações ao scroll
 export function useIntersectionObserver(callback, options = {}) {
-  const [isIntersecting, setIsIntersecting] = useState(false)
+  const [isIntersecting, setIsIntersecting] = useState(true) // Iniciar como true para visibilidade imediata
   const [hasAnimated, setHasAnimated] = useState(false)
   const elementRef = useRef(null)
 
   useEffect(() => {
     const element = elementRef.current
-    if (!element) return
+    if (!element) {
+      // Se não houver elemento, manter visível
+      setIsIntersecting(true)
+      return
+    }
+
+    // Se não houver IntersectionObserver, manter visível
+    if (typeof IntersectionObserver === 'undefined') {
+      setIsIntersecting(true)
+      return
+    }
 
     const observer = new IntersectionObserver(
       ([entry]) => {

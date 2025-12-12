@@ -15,14 +15,23 @@ export default defineConfig({
   },
   build: {
     outDir: 'dist',
-    sourcemap: true,
+    sourcemap: false, // Desabilitar sourcemaps em produção para melhor performance
+    minify: 'esbuild', // Usar esbuild (mais rápido que terser)
     rollupOptions: {
       output: {
         manualChunks: {
-          vendor: ['react', 'react-dom'],
+          'react-vendor': ['react', 'react-dom'],
+          'gsap-vendor': ['gsap'],
         },
+        // Otimização de nomes de arquivos
+        chunkFileNames: 'assets/js/[name]-[hash].js',
+        entryFileNames: 'assets/js/[name]-[hash].js',
+        assetFileNames: 'assets/[ext]/[name]-[hash].[ext]',
       },
     },
+    // Otimizações adicionais
+    chunkSizeWarningLimit: 1000,
+    cssCodeSplit: true,
   },
   server: {
     port: 3000,

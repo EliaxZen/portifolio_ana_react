@@ -41,12 +41,56 @@
   --shadow-sm: 0 2px 8px rgba(198, 40, 40, 0.2);
   --shadow-md: 0 4px 20px rgba(198, 40, 40, 0.25);
   --shadow-lg: 0 8px 30px rgba(198, 40, 40, 0.3);
+  --shadow-xl: 0 12px 45px rgba(198, 40, 40, 0.35);
+  
+  /* Variáveis de transição */
+  --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  /* Variáveis de cores do tema */
+  --color-primary: #C62828;
+  --color-primary-light: #E53935;
+  --color-primary-dark: #B71C1C;
+  --color-secondary: #F9A825;
+  --color-secondary-light: #FFB300;
+  --color-secondary-dark: #F57F17;
+  
+  /* Variáveis de gradientes */
+  --gradient-primary: linear-gradient(135deg, #C62828, #F9A825);
+  --gradient-primary-hover: linear-gradient(135deg, #E53935, #FFB300);
+  --gradient-text: linear-gradient(135deg, #C62828, #F9A825);
 }
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+/* Otimizações de performance */
+*,
+*::before,
+*::after {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Melhorias de scroll */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px;
+}
+
+/* Seleção de texto personalizada */
+::selection {
+  background: rgba(198, 40, 40, 0.3);
+  color: #212121;
+}
+
+::-moz-selection {
+  background: rgba(198, 40, 40, 0.3);
+  color: #212121;
 }
 
 html {
@@ -69,16 +113,100 @@ body {
 
 a {
   font-weight: 500;
-  color: #C62828;
+  color: var(--color-primary);
   text-decoration: inherit;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all var(--transition-normal);
+  position: relative;
 }
 
 a:hover {
-  color: #F9A825;
+  color: var(--color-secondary);
+  transform: translateY(-1px);
+}
+
+a:focus {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+  border-radius: 4px;
 }
 
 button {
   font-family: inherit;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+}
+
+/* Otimizações de renderização */
+section {
+  contain: layout style paint;
+  will-change: scroll-position;
+}
+
+/* Otimização de animações */
+.animated-section,
+.project-card,
+.skill-item {
+  will-change: transform, opacity;
+  transform: translateZ(0); /* Force GPU acceleration */
+  backface-visibility: hidden;
+}
+
+/* Otimização de scroll */
+html {
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Reduzir repaints */
+.header,
+.footer {
+  contain: layout style paint;
+}
+
+button:focus {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Melhorias de acessibilidade */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Melhorias de performance */
+img,
+svg {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Scrollbar personalizada */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--gradient-primary);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--gradient-primary-hover);
 }
 

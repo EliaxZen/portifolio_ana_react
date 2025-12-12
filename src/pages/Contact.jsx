@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
+import { gsap } from 'gsap'
 import { SOCIAL_LINKS } from '@/utils/constants'
 import AnimatedSection from '@/components/AnimatedSection'
 import './Contact.css'
@@ -10,6 +11,9 @@ function Contact({ showToast }) {
     subject: '',
     message: '',
   })
+  const formRef = useRef(null)
+  const inputsRef = useRef([])
+  const submitBtnRef = useRef(null)
 
   const handleChange = (e) => {
     setFormData({
@@ -45,6 +49,108 @@ function Contact({ showToast }) {
     
     setFormData({ name: '', email: '', subject: '', message: '' })
   }
+
+  useEffect(() => {
+    // Garantir visibilidade inicial SEMPRE
+    inputsRef.current.forEach(input => {
+      if (input) {
+        gsap.set(input, { 
+          opacity: 1, 
+          x: 0, 
+          scale: 1, 
+          y: 0,
+          visibility: 'visible',
+          display: 'block'
+        })
+      }
+    })
+    if (submitBtnRef.current) {
+      gsap.set(submitBtnRef.current, { 
+        opacity: 1, 
+        scale: 1, 
+        rotation: 0,
+        visibility: 'visible',
+        display: 'block'
+      })
+    }
+
+    // Animação dos inputs quando entram na viewport
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            // Usar to() ao invés de from() para não esconder
+            inputsRef.current.filter(Boolean).forEach(input => {
+              if (input) gsap.set(input, { x: -30, opacity: 0 })
+            })
+            gsap.to(inputsRef.current.filter(Boolean), {
+              x: 0,
+              opacity: 1,
+              duration: 0.6,
+              stagger: 0.1,
+              ease: 'power2.out'
+            })
+
+            if (submitBtnRef.current) {
+              gsap.set(submitBtnRef.current, { scale: 0, rotation: -180, opacity: 0 })
+              gsap.to(submitBtnRef.current, {
+                scale: 1,
+                rotation: 0,
+                opacity: 1,
+                duration: 0.6,
+                delay: 0.4,
+                ease: 'back.out(1.7)'
+              })
+            }
+
+            observer.unobserve(entry.target)
+          }
+        })
+      },
+      { threshold: 0.2 }
+    )
+
+    if (formRef.current) {
+      observer.observe(formRef.current)
+    }
+
+    // Animação de focus nos inputs
+    const cleanupFunctions = []
+    inputsRef.current.forEach((input) => {
+      if (!input) return
+
+      const handleFocus = () => {
+        gsap.to(input, {
+          scale: 1.02,
+          y: -2,
+          duration: 0.3,
+          ease: 'power2.out'
+        })
+      }
+
+      const handleBlur = () => {
+        gsap.to(input, {
+          scale: 1,
+          y: 0,
+          duration: 0.3,
+          ease: 'power2.out'
+        })
+      }
+
+      input.addEventListener('focus', handleFocus)
+      input.addEventListener('blur', handleBlur)
+
+      cleanupFunctions.push(() => {
+        input.removeEventListener('focus', handleFocus)
+        input.removeEventListener('blur', handleBlur)
+      })
+    })
+
+    return () => {
+      observer.disconnect()
+      cleanupFunctions.forEach(cleanup => cleanup())
+    }
+  }, [])
 
   return (
     <section id="contato" className="contact">
@@ -130,10 +236,11 @@ function Contact({ showToast }) {
           </AnimatedSection>
 
           <AnimatedSection delay={400}>
-            <form className="contact-form" onSubmit={handleSubmit}>
+            <form ref={formRef} className="contact-form" onSubmit={handleSubmit}>
             <div className="form-group">
               <label htmlFor="name">Nome</label>
               <input
+                ref={(el) => (inputsRef.current[0] = el)}
                 type="text"
                 id="name"
                 name="name"
@@ -147,6 +254,7 @@ function Contact({ showToast }) {
             <div className="form-group">
               <label htmlFor="email">Email</label>
               <input
+                ref={(el) => (inputsRef.current[1] = el)}
                 type="email"
                 id="email"
                 name="email"
@@ -160,6 +268,7 @@ function Contact({ showToast }) {
             <div className="form-group">
               <label htmlFor="subject">Assunto</label>
               <input
+                ref={(el) => (inputsRef.current[2] = el)}
                 type="text"
                 id="subject"
                 name="subject"
@@ -173,6 +282,7 @@ function Contact({ showToast }) {
             <div className="form-group">
               <label htmlFor="message">Mensagem</label>
               <textarea
+                ref={(el) => (inputsRef.current[3] = el)}
                 id="message"
                 name="message"
                 value={formData.message}
@@ -183,7 +293,7 @@ function Contact({ showToast }) {
               ></textarea>
             </div>
 
-            <button type="submit" className="submit-btn">
+            <button ref={submitBtnRef} type="submit" className="submit-btn">
               <span>Enviar Mensagem</span>
               <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M18.3333 1.66667L9.16667 10.8333M18.3333 1.66667L12.5 18.3333L9.16667 10.8333M18.3333 1.66667L1.66667 7.5L9.16667 10.8333" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>

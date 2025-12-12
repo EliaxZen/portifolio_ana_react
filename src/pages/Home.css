@@ -72,6 +72,32 @@
   font-weight: 800;
   filter: drop-shadow(0 0 15px rgba(249, 168, 37, 0.4));
   animation: glowPulse 3s ease-in-out infinite;
+  position: relative;
+  display: inline-block;
+}
+
+.home-title .highlight::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, #FFD54F, #FFC107, #FFB300);
+  border-radius: 2px;
+  opacity: 0.6;
+  animation: underlineGlow 3s ease-in-out infinite;
+}
+
+@keyframes underlineGlow {
+  0%, 100% {
+    opacity: 0.6;
+    transform: scaleX(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scaleX(1.1);
+  }
 }
 
 @keyframes glowPulse {
@@ -310,7 +336,8 @@
 
   .home-visual {
     height: 300px;
-    display: none; /* Ocultar formas geométricas em mobile para melhor performance */
+    /* Manter visível mas reduzir opacidade em mobile */
+    opacity: 0.5;
   }
 
   .shape-1,

@@ -1,12 +1,33 @@
 .animated-section {
-  opacity: 0;
-  transform: translateY(30px);
+  /* SEMPRE VISÍVEL por padrão */
+  opacity: 1 !important;
+  transform: translateY(0) !important;
   transition: opacity 0.8s ease-out, transform 0.8s ease-out;
   transition-delay: var(--delay, 0ms);
+  visibility: visible !important;
+  display: block !important;
+  /* Garantir que o conteúdo seja sempre visível */
+  min-height: 1px; /* Evitar colapso */
 }
 
 .animated-section.visible {
-  opacity: 1;
-  transform: translateY(0);
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+  visibility: visible !important;
+}
+
+/* Fallback para quando não há IntersectionObserver */
+@supports not (animation: none) {
+  .animated-section {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+    visibility: visible !important;
+  }
+}
+
+/* Garantir que filhos também sejam visíveis */
+.animated-section > * {
+  opacity: 1 !important;
+  visibility: visible !important;
 }
 
