@@ -3,9 +3,11 @@ import './Toast.css'
 
 function Toast({ message, type = 'success', onClose, duration = 3000 }) {
   useEffect(() => {
-    if (duration > 0) {
+    if (duration > 0 && onClose) {
       const timer = setTimeout(() => {
-        onClose()
+        if (onClose && typeof onClose === 'function') {
+          onClose()
+        }
       }, duration)
       return () => clearTimeout(timer)
     }

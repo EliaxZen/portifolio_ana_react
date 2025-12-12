@@ -13,7 +13,7 @@ function BackToTop() {
       }
       
       rafId = requestAnimationFrame(() => {
-        setIsVisible(window.pageYOffset > 300)
+        setIsVisible((window.scrollY || window.pageYOffset) > 300)
       })
     }
 

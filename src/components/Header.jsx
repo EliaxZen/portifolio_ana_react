@@ -24,7 +24,7 @@ function Header() {
       }
       
       rafId = requestAnimationFrame(() => {
-        setIsScrolled(window.scrollY > 50)
+        setIsScrolled((window.scrollY || window.pageYOffset) > 50)
       })
     }
 

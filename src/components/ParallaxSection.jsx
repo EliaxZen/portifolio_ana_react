@@ -14,11 +14,11 @@ function ParallaxSection({ children, speed = 0.5, className = '' }) {
       }
       
       rafId = requestAnimationFrame(() => {
-      if (ref.current) {
-        const scrolled = window.pageYOffset
-        const parallax = scrolled * speed
-        setOffset(parallax)
-      }
+        if (ref.current) {
+          const scrolled = window.scrollY || window.pageYOffset
+          const parallax = scrolled * speed
+          setOffset(parallax)
+        }
       })
     }
 

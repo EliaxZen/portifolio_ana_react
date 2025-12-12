@@ -15,9 +15,20 @@ export function formatDate(date) {
  * @param {string} elementId - ID do elemento
  */
 export function scrollToElement(elementId) {
-  const element = document.getElementById(elementId)
-  if (element) {
-    element.scrollIntoView({ behavior: 'smooth' })
+  try {
+    const element = document.getElementById(elementId)
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    }
+  } catch {
+    // Fallback para navegadores antigos
+    const element = document.getElementById(elementId)
+    if (element) {
+      window.scrollTo({
+        top: element.offsetTop,
+        behavior: 'smooth'
+      })
+    }
   }
 }
 
