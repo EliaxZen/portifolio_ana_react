@@ -19,7 +19,7 @@
 }
 
 .toast-success {
-  border-left-color: #4CAF50;
+  border-left-color: #2E7D32;
 }
 
 .toast-error {
@@ -51,17 +51,17 @@
 
 .toast-success .toast-icon {
   background: #C8E6C9;
-  color: #2E7D32;
+  color: #1B5E20;
 }
 
 .toast-error .toast-icon {
   background: #FFCDD2;
-  color: #C62828;
+  color: #B71C1C;
 }
 
 .toast-info .toast-icon {
-  background: #BBDEFB;
-  color: #1565C0;
+  background: #FFF9C4;
+  color: #F57F17;
 }
 
 .toast-message {
@@ -93,7 +93,7 @@
 }
 
 .toast-close:focus {
-  outline: 2px solid #2196F3;
+  outline: 2px solid #F9A825;
   outline-offset: 2px;
 }
 

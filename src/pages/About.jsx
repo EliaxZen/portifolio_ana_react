@@ -66,8 +66,13 @@ function About() {
               <h4>Competências</h4>
             <div className="skills-grid">
               {skills.map((skill, index) => (
-                <div key={index} className="skill-item">
-                  {skill}
+                <div 
+                  key={index} 
+                  className="skill-item"
+                  style={{ animationDelay: `${index * 0.1}s` }}
+                >
+                  <span className="skill-icon">✨</span>
+                  <span className="skill-text">{skill}</span>
                 </div>
               ))}
             </div>

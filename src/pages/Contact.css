@@ -137,8 +137,8 @@
   padding: 2rem;
   background: white;
   border-radius: 16px;
-  box-shadow: 0 4px 25px rgba(129, 199, 132, 0.1);
-  border: 1px solid rgba(129, 199, 132, 0.1);
+  box-shadow: 0 4px 25px rgba(198, 40, 40, 0.1);
+  border: 1px solid rgba(198, 40, 40, 0.15);
   transition: all 0.3s ease;
 }
 
@@ -161,16 +161,16 @@
 
 .social-icon {
   padding: 0.75rem 1rem;
-  background: linear-gradient(135deg, #C8E6C9, #BBDEFB);
+  background: linear-gradient(135deg, #FFCDD2, #FFF9C4);
   border-radius: 10px;
   text-decoration: none;
-  color: #2E7D32;
+  color: #B71C1C;
   font-weight: 600;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  border: 1px solid transparent;
+  border: 1px solid rgba(198, 40, 40, 0.2);
   position: relative;
   overflow: hidden;
 }
@@ -182,7 +182,7 @@
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(129, 199, 132, 0.1), transparent);
+  background: linear-gradient(90deg, transparent, rgba(249, 168, 37, 0.2), transparent);
   transition: left 0.5s;
 }
 
@@ -192,23 +192,43 @@
 
 .social-icon:hover {
   transform: translateX(8px) translateY(-2px);
-  box-shadow: 0 6px 25px rgba(198, 40, 40, 0.4), 0 0 15px rgba(249, 168, 37, 0.2);
-  background: linear-gradient(135deg, #A5D6A7, #90CAF9);
-  color: #1B5E20;
+  box-shadow: 0 6px 25px rgba(198, 40, 40, 0.4), 0 0 15px rgba(249, 168, 37, 0.3);
+  background: linear-gradient(135deg, #EF9A9A, #FFE082);
+  color: #7F0000;
   border-color: #C62828;
 }
 
 .contact-form {
   background: white;
   padding: 2.5rem;
-  border-radius: 16px;
-  box-shadow: 0 4px 25px rgba(129, 199, 132, 0.1);
-  border: 1px solid rgba(129, 199, 132, 0.1);
+  border-radius: 20px;
+  box-shadow: 0 4px 25px rgba(198, 40, 40, 0.15);
+  border: 1px solid rgba(198, 40, 40, 0.2);
   transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.contact-form::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #C62828, #F9A825);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.5s ease;
+}
+
+.contact-form:focus-within::before {
+  transform: scaleX(1);
 }
 
 .contact-form:hover {
   box-shadow: 0 8px 35px rgba(198, 40, 40, 0.2);
+  border-color: rgba(198, 40, 40, 0.3);
 }
 
 .form-group {
@@ -257,8 +277,21 @@
   outline: none;
   border-color: #C62828;
   background: white;
-  box-shadow: 0 0 0 3px rgba(198, 40, 40, 0.2), 0 0 10px rgba(249, 168, 37, 0.1);
+  box-shadow: 0 0 0 3px rgba(198, 40, 40, 0.15), 0 4px 15px rgba(249, 168, 37, 0.15);
   transform: translateY(-2px);
+}
+
+.form-group input:focus + label,
+.form-group textarea:focus + label {
+  color: #C62828;
+}
+
+.form-group {
+  position: relative;
+}
+
+.form-group label {
+  transition: color 0.3s ease;
 }
 
 .form-group textarea {
@@ -272,7 +305,7 @@
   background: linear-gradient(135deg, #C62828, #F9A825);
   color: white;
   border: none;
-  border-radius: 10px;
+  border-radius: 12px;
   font-size: 1.1rem;
   font-weight: 600;
   cursor: pointer;
@@ -280,6 +313,23 @@
   box-shadow: 0 4px 25px rgba(198, 40, 40, 0.4), 0 0 20px rgba(249, 168, 37, 0.3);
   position: relative;
   overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+}
+
+.submit-btn span {
+  position: relative;
+  z-index: 1;
+}
+
+.submit-btn svg {
+  width: 20px;
+  height: 20px;
+  transition: transform 0.3s ease;
+  position: relative;
+  z-index: 1;
 }
 
 .submit-btn::before {
@@ -298,9 +348,13 @@
 }
 
 .submit-btn:hover {
-  transform: translateY(-3px);
+  transform: translateY(-3px) scale(1.02);
   box-shadow: 0 8px 30px rgba(198, 40, 40, 0.5), 0 0 25px rgba(249, 168, 37, 0.4);
-  background: linear-gradient(135deg, #66BB6A, #42A5F5);
+  background: linear-gradient(135deg, #E53935, #FFB300);
+}
+
+.submit-btn:hover svg {
+  transform: translateX(4px) rotate(-15deg);
 }
 
 .submit-btn:active {

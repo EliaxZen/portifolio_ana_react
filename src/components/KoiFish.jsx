@@ -57,8 +57,10 @@ function KoiFish({ count = 3 }) {
         y: startY,
         scale: size,
         scaleX: direction,
-        opacity: 0.9,
-        visibility: 'visible'
+        opacity: 0.95,
+        visibility: 'visible',
+        display: 'block',
+        zIndex: 51
       })
       
       // Obter elementos SVG para animação
@@ -180,9 +182,10 @@ function KoiFish({ count = 3 }) {
         left: 0,
         width: '100%',
         height: '100%',
-        zIndex: 5,
+        zIndex: 50,
         pointerEvents: 'none',
-        visibility: 'visible'
+        visibility: 'visible',
+        display: 'block'
       }}
     ></div>
   )
@@ -323,18 +326,20 @@ function createKoiAnimations(fish, tail, dorsalFin, ventralFin, pectoralFin, bod
   
   // Garantir que comece visível
   gsap.set(fish, { 
-    x: -200, 
+    x: -250, 
     y: startY, 
     rotation: 0,
-    opacity: 0.9,
-    visibility: 'visible'
+    opacity: 0.95,
+    visibility: 'visible',
+    display: 'block',
+    zIndex: 51
   })
   
   // Criar movimento ondulante
   const segments = 6
   for (let i = 0; i <= segments; i++) {
     const progress = i / segments
-    const x = -200 + (window.innerWidth + 400) * progress
+    const x = -250 + (window.innerWidth + 500) * progress
     const y = startY - verticalAmplitude * Math.sin(progress * Math.PI * 2) * 0.5
     const rot = direction * rotationAmplitude * Math.sin(progress * Math.PI * 2) * 0.5
     
@@ -345,7 +350,7 @@ function createKoiAnimations(fish, tail, dorsalFin, ventralFin, pectoralFin, bod
       duration: swimDuration / segments,
       ease: i === 0 ? 'power2.out' : i === segments ? 'power2.in' : 'sine.inOut',
       onComplete: i === segments ? () => {
-        gsap.set(fish, { x: -200, y: startY, rotation: 0 })
+        gsap.set(fish, { x: -250, y: startY, rotation: 0 })
       } : undefined
     })
   }

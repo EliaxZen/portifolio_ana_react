@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { SOCIAL_LINKS } from '@/utils/constants'
+import AnimatedSection from '@/components/AnimatedSection'
 import './Contact.css'
 
 function Contact({ showToast }) {
@@ -48,16 +49,19 @@ function Contact({ showToast }) {
   return (
     <section id="contato" className="contact">
       <div className="contact-container">
-        <div className="contact-header">
-          <h2 className="section-title">Entre em Contato</h2>
-          <div className="title-underline"></div>
-          <p className="contact-subtitle">
-            Vamos conversar sobre seu próximo projeto arquitetônico!
-          </p>
-        </div>
+        <AnimatedSection>
+          <div className="contact-header">
+            <h2 className="section-title">Entre em Contato</h2>
+            <div className="title-underline"></div>
+            <p className="contact-subtitle">
+              Vamos conversar sobre seu próximo projeto arquitetônico!
+            </p>
+          </div>
+        </AnimatedSection>
 
         <div className="contact-content">
-          <div className="contact-info">
+          <AnimatedSection delay={200}>
+            <div className="contact-info">
             <h3>Vamos trabalhar juntos?</h3>
             <p>
               Estou sempre aberta a novos projetos e oportunidades. Se você tem
@@ -123,8 +127,10 @@ function Contact({ showToast }) {
               </div>
             </div>
           </div>
+          </AnimatedSection>
 
-          <form className="contact-form" onSubmit={handleSubmit}>
+          <AnimatedSection delay={400}>
+            <form className="contact-form" onSubmit={handleSubmit}>
             <div className="form-group">
               <label htmlFor="name">Nome</label>
               <input
@@ -178,9 +184,13 @@ function Contact({ showToast }) {
             </div>
 
             <button type="submit" className="submit-btn">
-              Enviar Mensagem
+              <span>Enviar Mensagem</span>
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M18.3333 1.66667L9.16667 10.8333M18.3333 1.66667L12.5 18.3333L9.16667 10.8333M18.3333 1.66667L1.66667 7.5L9.16667 10.8333" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
             </button>
           </form>
+          </AnimatedSection>
         </div>
       </div>
     </section>

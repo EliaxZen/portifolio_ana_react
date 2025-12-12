@@ -5,14 +5,22 @@ import './Header.css'
 
 function Header() {
   const [isScrolled, setIsScrolled] = useState(false)
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
+  
   const handleNavClick = (e, elementId) => {
     e.preventDefault()
     scrollToElement(elementId)
+    setIsMenuOpen(false) // Fechar menu mobile ao clicar
   }
 
   const handleLogoClick = (e) => {
     e.preventDefault()
     scrollToElement('home')
+    setIsMenuOpen(false)
+  }
+  
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen)
   }
 
   useEffect(() => {
@@ -51,24 +59,25 @@ function Header() {
           </div>
           <span className="logo-text">{SITE_NAME}</span>
         </a>
-        <nav className="header-nav">
-          <a href="#home" onClick={(e) => handleNavClick(e, 'home')}>
+        <nav className={`header-nav ${isMenuOpen ? 'open' : ''}`}>
+          <a href="#home" onClick={(e) => handleNavClick(e, 'home')} className="nav-link">
             Início
           </a>
-          <a href="#sobre" onClick={(e) => handleNavClick(e, 'sobre')}>
+          <a href="#sobre" onClick={(e) => handleNavClick(e, 'sobre')} className="nav-link">
             Sobre
           </a>
-          <a href="#projetos" onClick={(e) => handleNavClick(e, 'projetos')}>
+          <a href="#projetos" onClick={(e) => handleNavClick(e, 'projetos')} className="nav-link">
             Projetos
           </a>
-          <a href="#contato" onClick={(e) => handleNavClick(e, 'contato')}>
+          <a href="#contato" onClick={(e) => handleNavClick(e, 'contato')} className="nav-link">
             Contato
           </a>
         </nav>
         <button 
-          className="menu-toggle" 
+          className={`menu-toggle ${isMenuOpen ? 'active' : ''}`}
+          onClick={toggleMenu}
           aria-label="Menu"
-          aria-expanded="false"
+          aria-expanded={isMenuOpen}
           type="button"
         >
           <span></span>

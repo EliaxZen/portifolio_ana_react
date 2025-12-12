@@ -70,12 +70,17 @@
 .projects-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-  gap: 2rem;
+  gap: 2.5rem;
   perspective: 1000px;
 }
 
 .projects-grid > * {
   transform-style: preserve-3d;
+  transition: transform 0.3s ease;
+}
+
+.projects-grid > *:hover {
+  transform: translateY(-5px);
 }
 
 @media (max-width: 768px) {

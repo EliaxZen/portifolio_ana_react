@@ -58,13 +58,15 @@ function Projects() {
   return (
     <section id="projetos" className="projects">
       <div className="projects-container">
-        <div className="projects-header">
-          <h2 className="section-title">Meus Projetos</h2>
-          <div className="title-underline"></div>
-          <p className="projects-subtitle">
-            Explore alguns dos meus trabalhos em arquitetura e urbanismo
-          </p>
-        </div>
+        <AnimatedSection>
+          <div className="projects-header">
+            <h2 className="section-title">Meus Projetos</h2>
+            <div className="title-underline"></div>
+            <p className="projects-subtitle">
+              Explore alguns dos meus trabalhos em arquitetura e urbanismo
+            </p>
+          </div>
+        </AnimatedSection>
 
         <div className="projects-grid">
           {projects.map((project, index) => (

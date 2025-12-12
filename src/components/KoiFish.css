@@ -5,27 +5,29 @@
   width: 100vw;
   height: 100vh;
   pointer-events: none;
-  z-index: 5;
+  z-index: 50;
   overflow: visible;
   visibility: visible !important;
+  display: block !important;
 }
 
 .koi-fish {
   position: absolute;
   width: 180px;
   height: 90px;
-  opacity: 0.9;
+  opacity: 0.95;
   filter: drop-shadow(0 6px 16px rgba(198, 40, 40, 0.5)) 
           drop-shadow(0 3px 8px rgba(249, 168, 37, 0.4))
           drop-shadow(0 1px 3px rgba(0, 0, 0, 0.2));
   will-change: transform, opacity;
-  z-index: 11;
+  z-index: 51;
   contain: layout style paint;
   backface-visibility: hidden;
   transform-style: preserve-3d;
   transition: opacity 0.3s ease, filter 0.3s ease;
   pointer-events: none;
-  visibility: visible;
+  visibility: visible !important;
+  display: block !important;
 }
 
 .koi-fish:hover {
