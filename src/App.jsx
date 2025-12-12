@@ -6,9 +6,9 @@ import Contact from './pages/Contact'
 import Footer from './components/Footer'
 import ScrollProgress from './components/ScrollProgress'
 import BackToTop from './components/BackToTop'
-import KoiFish from './components/KoiFish'
 import OrientalDecoration from './components/OrientalDecoration'
 import WaterWaves from './components/WaterWaves'
+import SakuraLeaves from './components/SakuraLeaves'
 import Toast from './components/Toast'
 import { useToast } from './hooks/useToast'
 import './App.css'
@@ -20,7 +20,7 @@ function App() {
     <div className="App">
       <OrientalDecoration />
       <WaterWaves />
-      <KoiFish count={3} />
+      <SakuraLeaves count={20} />
       <ScrollProgress />
       <Header />
       <Home />
