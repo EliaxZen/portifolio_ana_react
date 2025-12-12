@@ -41,6 +41,27 @@ Visualiza a build de produção localmente:
 npm run preview
 ```
 
+### Deploy no Vercel (Recomendado)
+
+#### Opção 1: Via Dashboard (Mais Fácil)
+1. Acesse https://vercel.com e faça login
+2. Clique em "Add New Project"
+3. Conecte seu repositório GitHub
+4. O Vercel detectará automaticamente as configurações
+5. Clique em "Deploy"
+
+#### Opção 2: Via CLI
+```bash
+# Instalar Vercel CLI (se ainda não tiver)
+npm install -g vercel
+
+# Fazer login
+vercel login
+
+# Deploy de produção
+vercel --prod
+```
+
 ### Deploy no GitHub Pages
 
 Para fazer deploy no GitHub Pages (após instalar gh-pages):
