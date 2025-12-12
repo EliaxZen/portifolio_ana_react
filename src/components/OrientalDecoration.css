@@ -1,0 +1,210 @@
+.oriental-decoration {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.15;
+  contain: layout style paint;
+  will-change: transform;
+}
+
+.yin-yang {
+  position: absolute;
+  top: 10%;
+  right: 5%;
+  width: 90px;
+  height: 90px;
+  animation: rotate 25s linear infinite;
+  filter: drop-shadow(0 2px 8px rgba(198, 40, 40, 0.3));
+}
+
+.yin-yang-circle {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #C62828 0%, #C62828 50%, #F9A825 50%, #F9A825 100%);
+  position: relative;
+}
+
+.yin-yang-circle::before,
+.yin-yang-circle::after {
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.yin-yang-circle::before {
+  left: 25%;
+  background: #F9A825;
+  border: 8px solid #C62828;
+}
+
+.yin-yang-circle::after {
+  right: 25%;
+  background: #C62828;
+  border: 8px solid #F9A825;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.bamboo-pattern {
+  position: absolute;
+  bottom: 15%;
+  left: 8%;
+  display: flex;
+  gap: 20px;
+  opacity: 0.3;
+}
+
+.bamboo-stem {
+  width: 8px;
+  height: 120px;
+  background: linear-gradient(to bottom, 
+    rgba(198, 40, 40, 0.4) 0%,
+    rgba(198, 40, 40, 0.2) 25%,
+    rgba(249, 168, 37, 0.2) 50%,
+    rgba(198, 40, 40, 0.2) 75%,
+    rgba(198, 40, 40, 0.4) 100%
+  );
+  border-radius: 4px;
+  position: relative;
+  animation: bambooSway 3s ease-in-out infinite;
+}
+
+.bamboo-stem:nth-child(1) {
+  animation-delay: 0s;
+}
+
+.bamboo-stem:nth-child(2) {
+  animation-delay: 0.5s;
+  height: 100px;
+}
+
+.bamboo-stem:nth-child(3) {
+  animation-delay: 1s;
+  height: 110px;
+}
+
+.bamboo-stem::before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 15px;
+  background: rgba(249, 168, 37, 0.3);
+  border-radius: 2px;
+  top: 20px;
+}
+
+.bamboo-stem::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 15px;
+  background: rgba(249, 168, 37, 0.3);
+  border-radius: 2px;
+  bottom: 20px;
+}
+
+@keyframes bambooSway {
+  0%, 100% {
+    transform: translateX(0) rotate(0deg);
+  }
+  50% {
+    transform: translateX(3px) rotate(1deg);
+  }
+}
+
+.decorative-lines {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  transform: translateY(-50%);
+}
+
+.line {
+  height: 1px;
+  background: linear-gradient(90deg, 
+    transparent 0%,
+    rgba(198, 40, 40, 0.2) 20%,
+    rgba(249, 168, 37, 0.3) 50%,
+    rgba(198, 40, 40, 0.2) 80%,
+    transparent 100%
+  );
+  margin: 20px 0;
+  animation: lineExpand 4s ease-in-out infinite;
+}
+
+.line-1 {
+  animation-delay: 0s;
+}
+
+.line-2 {
+  animation-delay: 1.3s;
+  opacity: 0.6;
+}
+
+.line-3 {
+  animation-delay: 2.6s;
+  opacity: 0.4;
+}
+
+@keyframes lineExpand {
+  0%, 100% {
+    transform: scaleX(0.8);
+    opacity: 0.3;
+  }
+  50% {
+    transform: scaleX(1);
+    opacity: 0.6;
+  }
+}
+
+@media (max-width: 968px) {
+  .yin-yang {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .bamboo-pattern {
+    opacity: 0.2;
+  }
+}
+
+@media (max-width: 768px) {
+  .yin-yang {
+    width: 50px;
+    height: 50px;
+    top: 5%;
+    right: 3%;
+  }
+  
+  .bamboo-pattern {
+    display: none;
+  }
+  
+  .decorative-lines {
+    opacity: 0.1;
+  }
+}
+
+@media (max-width: 480px) {
+  .oriental-decoration {
+    opacity: 0.1;
+  }
+}
+
