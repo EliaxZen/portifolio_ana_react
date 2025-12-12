@@ -13,7 +13,7 @@ function ScrollProgress() {
       }
       
       rafId = requestAnimationFrame(() => {
-        const scrollPx = document.documentElement.scrollTop
+        const scrollPx = document.documentElement.scrollTop || window.pageYOffset
         const winHeightPx =
           document.documentElement.scrollHeight -
           document.documentElement.clientHeight

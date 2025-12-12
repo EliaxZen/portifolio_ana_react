@@ -15,29 +15,80 @@ function Contact({ showToast }) {
   const inputsRef = useRef([])
   const submitBtnRef = useRef(null)
 
+  const [errors, setErrors] = useState({})
+  const [touched, setTouched] = useState({})
+
   const handleChange = (e) => {
+    const { name, value } = e.target
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value,
+      [name]: value,
     })
+    
+    // Validação em tempo real
+    if (touched[name]) {
+      validateField(name, value)
+    }
+  }
+
+  const handleBlur = (e) => {
+    const { name, value } = e.target
+    setTouched({ ...touched, [name]: true })
+    validateField(name, value)
+  }
+
+  const validateField = (name, value) => {
+    const newErrors = { ...errors }
+    
+    if (!value.trim()) {
+      newErrors[name] = 'Este campo é obrigatório'
+    } else if (name === 'email') {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+      if (!emailRegex.test(value)) {
+        newErrors[name] = 'Email inválido'
+      } else {
+        delete newErrors[name]
+      }
+    } else {
+      delete newErrors[name]
+    }
+    
+    setErrors(newErrors)
   }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
     
-    // Validação básica
-    if (!formData.name || !formData.email || !formData.subject || !formData.message) {
-      if (showToast) {
-        showToast('Por favor, preencha todos os campos.', 'error')
-      }
-      return
+    // Marcar todos os campos como tocados
+    const allTouched = {
+      name: true,
+      email: true,
+      subject: true,
+      message: true
     }
+    setTouched(allTouched)
+    
+    // Validar todos os campos
+    const newErrors = {}
+    Object.keys(formData).forEach(key => {
+      validateField(key, formData[key])
+      if (!formData[key].trim()) {
+        newErrors[key] = 'Este campo é obrigatório'
+      }
+    })
     
     // Validação de email
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-    if (!emailRegex.test(formData.email)) {
+    if (formData.email && !emailRegex.test(formData.email)) {
+      newErrors.email = 'Email inválido'
+    }
+    
+    setErrors(newErrors)
+    
+    // Se houver erros, não enviar
+    if (Object.keys(newErrors).length > 0) {
       if (showToast) {
-        showToast('Por favor, insira um email válido.', 'error')
+        showToast('Por favor, corrija os erros no formulário.', 'error')
       }
       return
     }
@@ -48,6 +99,8 @@ function Contact({ showToast }) {
     }
     
     setFormData({ name: '', email: '', subject: '', message: '' })
+    setErrors({})
+    setTouched({})
   }
 
   useEffect(() => {
@@ -246,9 +299,17 @@ function Contact({ showToast }) {
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
+                onBlur={handleBlur}
                 required
                 placeholder="Seu nome"
+                aria-invalid={errors.name ? 'true' : 'false'}
+                aria-describedby={errors.name ? 'name-error' : undefined}
               />
+              {errors.name && touched.name && (
+                <span id="name-error" className="form-error" role="alert">
+                  {errors.name}
+                </span>
+              )}
             </div>
 
             <div className="form-group">
@@ -260,9 +321,17 @@ function Contact({ showToast }) {
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
+                onBlur={handleBlur}
                 required
                 placeholder="seu@email.com"
+                aria-invalid={errors.email ? 'true' : 'false'}
+                aria-describedby={errors.email ? 'email-error' : undefined}
               />
+              {errors.email && touched.email && (
+                <span id="email-error" className="form-error" role="alert">
+                  {errors.email}
+                </span>
+              )}
             </div>
 
             <div className="form-group">
@@ -274,9 +343,17 @@ function Contact({ showToast }) {
                 name="subject"
                 value={formData.subject}
                 onChange={handleChange}
+                onBlur={handleBlur}
                 required
                 placeholder="Assunto da mensagem"
+                aria-invalid={errors.subject ? 'true' : 'false'}
+                aria-describedby={errors.subject ? 'subject-error' : undefined}
               />
+              {errors.subject && touched.subject && (
+                <span id="subject-error" className="form-error" role="alert">
+                  {errors.subject}
+                </span>
+              )}
             </div>
 
             <div className="form-group">
@@ -287,10 +364,18 @@ function Contact({ showToast }) {
                 name="message"
                 value={formData.message}
                 onChange={handleChange}
+                onBlur={handleBlur}
                 required
                 rows="6"
                 placeholder="Conte-me sobre seu projeto..."
+                aria-invalid={errors.message ? 'true' : 'false'}
+                aria-describedby={errors.message ? 'message-error' : undefined}
               ></textarea>
+              {errors.message && touched.message && (
+                <span id="message-error" className="form-error" role="alert">
+                  {errors.message}
+                </span>
+              )}
             </div>
 
             <button ref={submitBtnRef} type="submit" className="submit-btn">

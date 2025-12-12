@@ -18,16 +18,29 @@ export function scrollToElement(elementId) {
   try {
     const element = document.getElementById(elementId)
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      // Calcular offset para header fixo
+      const headerHeight = 80
+      const elementPosition = element.getBoundingClientRect().top + (window.scrollY || window.pageYOffset)
+      const offsetPosition = elementPosition - headerHeight
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      })
+      
+      // Focus no elemento para acessibilidade
+      element.setAttribute('tabindex', '-1')
+      element.focus()
+      element.addEventListener('blur', () => {
+        element.removeAttribute('tabindex')
+      }, { once: true })
     }
   } catch {
     // Fallback para navegadores antigos
     const element = document.getElementById(elementId)
     if (element) {
-      window.scrollTo({
-        top: element.offsetTop,
-        behavior: 'smooth'
-      })
+      const headerHeight = 80
+      window.scrollTo(0, element.offsetTop - headerHeight)
     }
   }
 }

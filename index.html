@@ -33,8 +33,31 @@
     <!-- Preconnect for Performance -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Ana Carolina Silva",
+      "jobTitle": "Estudante de Arquitetura e Urbanismo",
+      "alumniOf": {
+        "@type": "EducationalOrganization",
+        "name": "UDF - Centro Universitário do Distrito Federal"
+      },
+      "description": "Estudante de Arquitetura e Urbanismo apaixonada por criar espaços que transformam vidas e comunidades através de projetos arquitetônicos sustentáveis e inovadores.",
+      "url": "https://portifolioanareact.vercel.app/",
+      "sameAs": []
+    }
+    </script>
+    
+    <!-- DNS Prefetch -->
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
   </head>
   <body>
+    <!-- Skip to main content link for accessibility -->
+    <a href="#home" class="skip-to-main" aria-label="Pular para o conteúdo principal">Pular para o conteúdo</a>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>

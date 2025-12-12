@@ -33,6 +33,16 @@ function BackToTop() {
       top: 0,
       behavior: 'smooth',
     })
+    
+    // Focus no header para acessibilidade
+    const header = document.querySelector('header')
+    if (header) {
+      header.setAttribute('tabindex', '-1')
+      header.focus()
+      header.addEventListener('blur', () => {
+        header.removeAttribute('tabindex')
+      }, { once: true })
+    }
   }
 
   return (

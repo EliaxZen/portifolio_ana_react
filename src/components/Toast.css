@@ -108,12 +108,36 @@
   }
 }
 
+/* Mobile (≤768px) */
 @media (max-width: 768px) {
   .toast {
     right: 1rem;
     left: 1rem;
     min-width: auto;
     max-width: none;
+    padding: 0.875rem 1rem;
+    font-size: 0.95rem;
+  }
+
+  .toast-icon {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+/* Mobile Small (≤480px) */
+@media (max-width: 480px) {
+  .toast {
+    right: 0.75rem;
+    left: 0.75rem;
+    padding: 0.75rem 0.875rem;
+    font-size: 0.9rem;
+    border-radius: 10px;
+  }
+
+  .toast-icon {
+    width: 18px;
+    height: 18px;
   }
 }
 

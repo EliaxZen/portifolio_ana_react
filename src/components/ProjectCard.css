@@ -166,3 +166,86 @@
   box-shadow: 0 2px 10px rgba(198, 40, 40, 0.3);
 }
 
+/* Melhorias visuais */
+.project-card {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.project-card:focus-within {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 4px;
+  border-radius: 20px;
+}
+
+.project-link:focus {
+  outline: 2px solid white;
+  outline-offset: 2px;
+  border-radius: 10px;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .project-card {
+    border-radius: 16px;
+  }
+
+  .project-content {
+    padding: 1.25rem;
+  }
+
+  .project-title {
+    font-size: 1.3rem;
+  }
+
+  .project-description {
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+
+  .project-image {
+    height: 200px;
+  }
+
+  .placeholder-icon {
+    font-size: 3rem;
+  }
+
+  .project-link {
+    padding: 0.625rem 1.5rem;
+    font-size: 0.95rem;
+    min-height: 44px; /* Touch target mínimo */
+  }
+}
+
+@media (max-width: 480px) {
+  .project-content {
+    padding: 1rem;
+  }
+
+  .project-title {
+    font-size: 1.2rem;
+  }
+
+  .project-description {
+    font-size: 0.9rem;
+  }
+
+  .project-image {
+    height: 180px;
+  }
+
+  .placeholder-icon {
+    font-size: 2.5rem;
+  }
+
+  .project-tag {
+    padding: 0.35rem 0.7rem;
+    font-size: 0.8rem;
+  }
+
+  .project-link {
+    padding: 0.625rem 1.25rem;
+    font-size: 0.9rem;
+  }
+}
+

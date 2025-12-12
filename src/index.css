@@ -48,6 +48,13 @@
   --transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   --transition-slow: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   
+  /* Breakpoints para uso em media queries */
+  --breakpoint-mobile: 480px;
+  --breakpoint-tablet: 768px;
+  --breakpoint-tablet-large: 968px;
+  --breakpoint-desktop: 1200px;
+  --breakpoint-desktop-large: 1440px;
+  
   /* Variáveis de cores do tema */
   --color-primary: #C62828;
   --color-primary-light: #E53935;
@@ -190,6 +197,28 @@ svg {
   max-width: 100%;
   height: auto;
   display: block;
+}
+
+/* Skip to main content link */
+.skip-to-main {
+  position: absolute;
+  top: -100px;
+  left: 0;
+  z-index: 10000;
+  padding: 1rem 1.5rem;
+  background: var(--color-primary);
+  color: var(--text-light);
+  text-decoration: none;
+  font-weight: 600;
+  border-radius: 0 0 8px 0;
+  transition: top 0.3s ease;
+  box-shadow: 0 4px 12px rgba(198, 40, 40, 0.4);
+}
+
+.skip-to-main:focus {
+  top: 0;
+  outline: 3px solid var(--color-secondary-light);
+  outline-offset: 2px;
 }
 
 /* Scrollbar personalizada */

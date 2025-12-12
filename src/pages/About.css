@@ -218,6 +218,12 @@
   animation: fadeInUp 0.6s ease-out both;
 }
 
+.skill-item:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+  border-radius: 12px;
+}
+
 .skill-icon {
   font-size: 1.2rem;
   transition: transform 0.3s ease;
@@ -255,7 +261,12 @@
   transform: rotate(15deg) scale(1.2);
 }
 
-@media (max-width: 968px) {
+/* Tablet Large (769px - 968px) */
+@media (min-width: 769px) and (max-width: 968px) {
+  .about {
+    padding: 5rem 2rem;
+  }
+
   .about-content {
     grid-template-columns: 1fr;
     gap: 3rem;
@@ -267,34 +278,59 @@
 
   .skills-grid {
     grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+
+  .section-title {
+    font-size: 2.5rem;
   }
 }
 
+/* Tablet e Mobile (≤968px) */
 @media (max-width: 968px) {
   .about-content {
+    grid-template-columns: 1fr;
     gap: 2.5rem;
   }
   
   .about-skills {
     position: static;
   }
+
+  .skills-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 
+/* Mobile (≤768px) */
 @media (max-width: 768px) {
   .about {
     padding: 4rem 1.5rem;
+  }
+
+  .about-header {
+    margin-bottom: 3rem;
   }
 
   .section-title {
     font-size: 2rem;
   }
 
+  .about-content {
+    gap: 2rem;
+  }
+
   .about-intro h3 {
     font-size: 1.5rem;
   }
 
+  .about-description {
+    font-size: 1.1rem;
+  }
+
   .about-text p {
     font-size: 1rem;
+    line-height: 1.7;
   }
 
   .skills-grid {
@@ -303,13 +339,66 @@
   }
   
   .skill-item {
-    padding: 0.75rem;
+    padding: 0.875rem 1rem;
     font-size: 0.9rem;
+    min-height: 48px; /* Touch target mínimo */
   }
   
   .about-education,
   .about-skills {
     padding: 1.5rem;
+  }
+
+  .education-item {
+    flex-direction: column;
+    text-align: center;
+    gap: 1rem;
+  }
+
+  .education-icon {
+    margin: 0 auto;
+  }
+}
+
+/* Mobile Small (≤480px) */
+@media (max-width: 480px) {
+  .about {
+    padding: 3rem 1rem;
+  }
+
+  .section-title {
+    font-size: 1.75rem;
+  }
+
+  .about-intro h3 {
+    font-size: 1.25rem;
+  }
+
+  .about-description {
+    font-size: 1rem;
+  }
+
+  .about-text p {
+    font-size: 0.95rem;
+  }
+
+  .skills-grid {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+
+  .skill-item {
+    padding: 1rem;
+    font-size: 0.9rem;
+  }
+
+  .about-education,
+  .about-skills {
+    padding: 1.25rem;
+  }
+
+  .education-item h5 {
+    font-size: 1.1rem;
   }
 }
 

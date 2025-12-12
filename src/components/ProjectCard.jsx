@@ -85,9 +85,11 @@ function ProjectCard({ project }) {
       }
 
       if (link) {
-        gsap.from(link, {
-          scale: 0,
-          rotation: -180,
+        gsap.set(link, { scale: 0, rotation: -180, opacity: 0 })
+        gsap.to(link, {
+          scale: 1,
+          rotation: 0,
+          opacity: 1,
           duration: 0.5,
           ease: 'back.out(1.7)'
         })
