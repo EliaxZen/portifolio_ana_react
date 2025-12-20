@@ -14,7 +14,6 @@ import './App.css'
 // Lazy load de componentes pesados
 const OrientalDecoration = lazy(() => import('./components/OrientalDecoration'))
 const WaterWaves = lazy(() => import('./components/WaterWaves'))
-const SakuraLeaves = lazy(() => import('./components/SakuraLeaves'))
 
 // Componente de loading mínimo
 const LazyLoader = () => null
@@ -27,7 +26,6 @@ function App() {
       <Suspense fallback={<LazyLoader />}>
         <OrientalDecoration />
         <WaterWaves />
-        <SakuraLeaves count={20} />
       </Suspense>
       <ScrollProgress />
       <Header />
