@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef } from 'react'
-import { gsap } from 'gsap'
 import { SOCIAL_LINKS } from '@/utils/constants'
 import AnimatedSection from '@/components/AnimatedSection'
 import './Contact.css'
@@ -104,104 +103,16 @@ function Contact({ showToast }) {
   }
 
   useEffect(() => {
-    // Garantir visibilidade inicial SEMPRE
+    // Garantir visibilidade inicial
     inputsRef.current.forEach(input => {
       if (input) {
-        gsap.set(input, { 
-          opacity: 1, 
-          x: 0, 
-          scale: 1, 
-          y: 0,
-          visibility: 'visible',
-          display: 'block'
-        })
+        input.style.opacity = '1'
+        input.style.visibility = 'visible'
       }
     })
     if (submitBtnRef.current) {
-      gsap.set(submitBtnRef.current, { 
-        opacity: 1, 
-        scale: 1, 
-        rotation: 0,
-        visibility: 'visible',
-        display: 'block'
-      })
-    }
-
-    // Animação dos inputs quando entram na viewport
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            // Usar to() ao invés de from() para não esconder
-            inputsRef.current.filter(Boolean).forEach(input => {
-              if (input) gsap.set(input, { x: -30, opacity: 0 })
-            })
-            gsap.to(inputsRef.current.filter(Boolean), {
-              x: 0,
-              opacity: 1,
-              duration: 0.6,
-              stagger: 0.1,
-              ease: 'power2.out'
-            })
-
-            if (submitBtnRef.current) {
-              gsap.set(submitBtnRef.current, { scale: 0, rotation: -180, opacity: 0 })
-              gsap.to(submitBtnRef.current, {
-                scale: 1,
-                rotation: 0,
-                opacity: 1,
-                duration: 0.6,
-                delay: 0.4,
-                ease: 'back.out(1.7)'
-              })
-            }
-
-            observer.unobserve(entry.target)
-          }
-        })
-      },
-      { threshold: 0.2 }
-    )
-
-    if (formRef.current) {
-      observer.observe(formRef.current)
-    }
-
-    // Animação de focus nos inputs
-    const cleanupFunctions = []
-    inputsRef.current.forEach((input) => {
-      if (!input) return
-
-      const handleFocus = () => {
-        gsap.to(input, {
-          scale: 1.02,
-          y: -2,
-          duration: 0.3,
-          ease: 'power2.out'
-        })
-      }
-
-      const handleBlur = () => {
-        gsap.to(input, {
-          scale: 1,
-          y: 0,
-          duration: 0.3,
-          ease: 'power2.out'
-        })
-      }
-
-      input.addEventListener('focus', handleFocus)
-      input.addEventListener('blur', handleBlur)
-
-      cleanupFunctions.push(() => {
-        input.removeEventListener('focus', handleFocus)
-        input.removeEventListener('blur', handleBlur)
-      })
-    })
-
-    return () => {
-      observer.disconnect()
-      cleanupFunctions.forEach(cleanup => cleanup())
+      submitBtnRef.current.style.opacity = '1'
+      submitBtnRef.current.style.visibility = 'visible'
     }
   }, [])
 

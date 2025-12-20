@@ -18,7 +18,6 @@
     "deploy": "npm run build && gh-pages -d dist"
   },
   "dependencies": {
-    "gsap": "^3.14.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },

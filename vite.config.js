@@ -21,7 +21,6 @@ export default defineConfig({
       output: {
         manualChunks: {
           'react-vendor': ['react', 'react-dom'],
-          'gsap-vendor': ['gsap'],
         },
         // Otimização de nomes de arquivos
         chunkFileNames: 'assets/js/[name]-[hash].js',

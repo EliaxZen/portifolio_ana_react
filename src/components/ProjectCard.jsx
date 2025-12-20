@@ -1,5 +1,4 @@
 import { useEffect, useRef } from 'react'
-import { gsap } from 'gsap'
 import './ProjectCard.css'
 
 function ProjectCard({ project }) {
@@ -20,106 +19,16 @@ function ProjectCard({ project }) {
     const overlay = overlayRef.current
     const link = linkRef.current
 
-    // Garantir visibilidade inicial SEMPRE
-    gsap.set(card, { 
-      opacity: 1, 
-      y: 0, 
-      scale: 1,
-      visibility: 'visible',
-      display: 'block'
-    })
+    // Garantir visibilidade inicial
+    card.style.opacity = '1'
+    card.style.visibility = 'visible'
     if (overlay) {
-      gsap.set(overlay, { 
-        opacity: 0,
-        visibility: 'visible',
-        display: 'flex'
-      })
+      overlay.style.opacity = '0'
+      overlay.style.visibility = 'visible'
     }
     if (link) {
-      gsap.set(link, { 
-        opacity: 1, 
-        scale: 1, 
-        rotation: 0,
-        visibility: 'visible',
-        display: 'block'
-      })
-    }
-
-    // Observer para animação quando card entra na viewport
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            // Usar to() ao invés de from() para não esconder
-            gsap.set(card, { y: 50, opacity: 0 })
-            gsap.to(card, {
-              y: 0,
-              opacity: 1,
-              duration: 0.6,
-              ease: 'power3.out'
-            })
-            observer.unobserve(card)
-          }
-        })
-      },
-      { threshold: 0.2 }
-    )
-
-    observer.observe(card)
-
-    // Hover animation
-    const handleMouseEnter = () => {
-      gsap.to(card, {
-        y: -10,
-        scale: 1.02,
-        duration: 0.4,
-        ease: 'power2.out'
-      })
-
-      if (overlay) {
-        gsap.to(overlay, {
-          opacity: 1,
-          duration: 0.3,
-          ease: 'power2.out'
-        })
-      }
-
-      if (link) {
-        gsap.set(link, { scale: 0, rotation: -180, opacity: 0 })
-        gsap.to(link, {
-          scale: 1,
-          rotation: 0,
-          opacity: 1,
-          duration: 0.5,
-          ease: 'back.out(1.7)'
-        })
-      }
-    }
-
-    const handleMouseLeave = () => {
-      gsap.to(card, {
-        y: 0,
-        scale: 1,
-        duration: 0.4,
-        ease: 'power2.out'
-      })
-
-      if (overlay) {
-        gsap.to(overlay, {
-          opacity: 0,
-          duration: 0.3,
-          ease: 'power2.out'
-        })
-      }
-    }
-
-    card.addEventListener('mouseenter', handleMouseEnter)
-    card.addEventListener('mouseleave', handleMouseLeave)
-
-    return () => {
-      observer.disconnect()
-      card.removeEventListener('mouseenter', handleMouseEnter)
-      card.removeEventListener('mouseleave', handleMouseLeave)
+      link.style.opacity = '1'
+      link.style.visibility = 'visible'
     }
   }, [])
 

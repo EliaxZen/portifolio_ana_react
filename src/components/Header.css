@@ -273,7 +273,7 @@
     display: flex !important;
   }
 
-  /* Garantir que GSAP não interfira no menu mobile */
+  /* Garantir que o menu mobile funcione corretamente */
   .header-nav.open,
   .header-nav.open * {
     opacity: 1 !important;

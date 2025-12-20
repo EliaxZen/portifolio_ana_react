@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef, memo, useCallback } from 'react'
-import { gsap } from 'gsap'
 import { scrollToElement } from '@/utils'
 import { SITE_NAME } from '@/utils/constants'
 import { rafThrottle } from '@/utils/performance'
@@ -76,138 +75,32 @@ function Header() {
     }
   }, [])
 
-  // Animações GSAP para o header (apenas desktop)
+  // Garantir visibilidade inicial do header
   useEffect(() => {
     if (!headerRef.current) return
-    // Não aplicar animações GSAP em mobile para evitar conflitos
-    if (window.innerWidth <= 768) return
 
     const header = headerRef.current
     const logo = logoRef.current
     const navLinks = navLinksRef.current.filter(Boolean)
 
-    // Garantir visibilidade inicial SEMPRE
-    gsap.set(header, { 
-      opacity: 1, 
-      y: 0, 
-      visibility: 'visible',
-      display: 'block'
-    })
-    if (logo) {
-      gsap.set(logo, { 
-        opacity: 1, 
-        scale: 1, 
-        rotation: 0,
-        visibility: 'visible',
-        display: 'block'
-      })
-    }
-    navLinks.forEach(link => {
-      if (link) {
-        gsap.set(link, { 
-          opacity: 1, 
-          y: 0, 
-          scale: 1,
-          visibility: 'visible',
-          display: 'block'
-        })
-      }
-    })
-
-    // Garantir visibilidade inicial usando style direto
+    // Garantir visibilidade inicial
     header.style.opacity = '1'
     header.style.visibility = 'visible'
-    header.style.display = 'block'
-    header.style.transform = 'translateY(0)'
     
     if (logo) {
       logo.style.opacity = '1'
       logo.style.visibility = 'visible'
-      logo.style.display = 'block'
-      logo.style.transform = 'scale(1) rotate(0deg)'
     }
     
     navLinks.forEach(link => {
       if (link) {
         link.style.opacity = '1'
         link.style.visibility = 'visible'
-        link.style.display = 'block'
-        link.style.transform = 'translateY(0) scale(1)'
       }
     })
-
-    // Animação inicial do header - usar to() ao invés de from()
-    gsap.set(header, { y: -100, opacity: 0 })
-    gsap.to(header, {
-      y: 0,
-      opacity: 1,
-      duration: 0.8,
-      ease: 'power3.out'
-    })
-
-    // Animação do logo
-    if (logo) {
-      gsap.set(logo, { scale: 0, rotation: -180, opacity: 0 })
-      gsap.to(logo, {
-        scale: 1,
-        rotation: 0,
-        opacity: 1,
-        duration: 0.6,
-        delay: 0.2,
-        ease: 'back.out(1.7)'
-      })
-    }
-
-    // Animação dos links de navegação (stagger) - apenas desktop
-    if (navLinks.length > 0 && window.innerWidth > 768) {
-      navLinks.forEach(link => {
-        if (link) gsap.set(link, { y: -20, opacity: 0 })
-      })
-      gsap.to(navLinks, {
-        y: 0,
-        opacity: 1,
-        duration: 0.5,
-        delay: 0.4,
-        stagger: 0.1,
-        ease: 'power2.out'
-      })
-    }
-
-    // Animação de hover nos links - apenas desktop
-    if (window.innerWidth > 768) {
-      navLinks.forEach((link) => {
-        if (!link) return
-        
-        const handleMouseEnter = () => {
-          gsap.to(link, {
-            y: -2,
-            scale: 1.05,
-            duration: 0.3,
-            ease: 'power2.out'
-          })
-        }
-
-        const handleMouseLeave = () => {
-          gsap.to(link, {
-            y: 0,
-            scale: 1,
-            duration: 0.3,
-            ease: 'power2.out'
-          })
-        }
-
-        link.addEventListener('mouseenter', handleMouseEnter)
-        link.addEventListener('mouseleave', handleMouseLeave)
-
-        return () => {
-          link.removeEventListener('mouseenter', handleMouseEnter)
-          link.removeEventListener('mouseleave', handleMouseLeave)
-        }
-      })
-    }
   }, [])
 
-  // Garantir que o menu mobile permaneça visível quando aberto e prevenir que GSAP interfira
+  // Garantir que o menu mobile permaneça visível quando aberto
   useEffect(() => {
     if (!navRef.current) return
 
@@ -215,17 +108,7 @@ function Header() {
     const isMobile = window.innerWidth <= 768
 
     if (isMenuOpen && isMobile) {
-      // Forçar visibilidade com style direto e matar qualquer animação GSAP
-      gsap.killTweensOf(nav)
-      gsap.set(nav, {
-        transform: 'translateY(0)',
-        opacity: 1,
-        visibility: 'visible',
-        display: 'flex',
-        clearProps: 'all'
-      })
-      
-      // Também forçar via style direto
+      // Forçar visibilidade com style direto
       nav.style.setProperty('transform', 'translateY(0)', 'important')
       nav.style.setProperty('opacity', '1', 'important')
       nav.style.setProperty('visibility', 'visible', 'important')
@@ -236,23 +119,9 @@ function Header() {
       // Garantir que os links também estejam visíveis
       const links = nav.querySelectorAll('.nav-link')
       links.forEach(link => {
-        gsap.killTweensOf(link)
-        gsap.set(link, {
-          opacity: 1,
-          visibility: 'visible',
-          transform: 'none',
-          clearProps: 'all'
-        })
         link.style.setProperty('opacity', '1', 'important')
         link.style.setProperty('visibility', 'visible', 'important')
         link.style.setProperty('transform', 'none', 'important')
-      })
-    } else if (!isMenuOpen && isMobile) {
-      // Resetar quando fechado
-      gsap.killTweensOf(nav)
-      const links = nav.querySelectorAll('.nav-link')
-      links.forEach(link => {
-        gsap.killTweensOf(link)
       })
     }
   }, [isMenuOpen])
