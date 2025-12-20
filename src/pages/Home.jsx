@@ -2,6 +2,7 @@ import { useState, useEffect, useRef, memo, useMemo, useCallback } from 'react'
 import { PERSONAL_INFO } from '@/utils/constants'
 import { scrollToElement } from '@/utils'
 import { rafThrottle, isLowEndDevice } from '@/utils/performance'
+import { fadeInUp, textReveal, staggerFadeInUp, floatAnimation, buttonHover } from '@/utils/gsapAnimations'
 import ParallaxSection from '@/components/ParallaxSection'
 import OrientalPattern from '@/components/OrientalPattern'
 import AnimatedSection from '@/components/AnimatedSection'
@@ -35,8 +36,47 @@ function Home() {
     return () => window.removeEventListener('mousemove', throttledMouseMove)
   }, [throttledMouseMove])
 
-  // Garantir visibilidade inicial
+  // Animações GSAP
   useEffect(() => {
+    // Animação do título
+    if (titleRef.current) {
+      fadeInUp(titleRef.current, { delay: 0.2, y: 60 })
+    }
+
+    // Animação do subtítulo
+    if (subtitleRef.current) {
+      fadeInUp(subtitleRef.current, { delay: 0.4, y: 40 })
+    }
+
+    // Animação da descrição
+    if (descriptionRef.current) {
+      fadeInUp(descriptionRef.current, { delay: 0.6, y: 40 })
+    }
+
+    // Animação dos botões com stagger
+    if (buttonsRef.current) {
+      const buttons = Array.from(buttonsRef.current.children)
+      staggerFadeInUp(buttons, { delay: 0.8, stagger: 0.15, y: 30 })
+      
+      // Adicionar hover animation aos botões
+      buttons.forEach(button => {
+        buttonHover(button)
+      })
+    }
+
+    // Animações das formas geométricas
+    shapesRef.current.forEach((shape, index) => {
+      if (shape) {
+        // Float animation com delays diferentes
+        floatAnimation(shape, {
+          duration: 3 + index,
+          y: 20 + index * 10,
+          rotation: (index % 2 === 0 ? 1 : -1) * (5 + index * 2),
+        })
+      }
+    })
+
+    // Garantir visibilidade inicial (fallback)
     const ensureVisibility = () => {
       if (titleRef.current) {
         titleRef.current.style.opacity = '1'

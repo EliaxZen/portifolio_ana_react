@@ -103,7 +103,7 @@ function Contact({ showToast }) {
   }
 
   useEffect(() => {
-    // Garantir visibilidade inicial
+    // Garantir visibilidade inicial (fallback)
     inputsRef.current.forEach(input => {
       if (input) {
         input.style.opacity = '1'

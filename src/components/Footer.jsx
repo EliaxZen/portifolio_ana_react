@@ -1,9 +1,89 @@
+import { useEffect, useRef } from 'react'
+import { gsap } from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { SITE_NAME, SOCIAL_LINKS, PERSONAL_INFO } from '@/utils/constants'
 import { scrollToElement } from '@/utils'
 import './Footer.css'
 
 function Footer() {
   const currentYear = new Date().getFullYear()
+  const footerRef = useRef(null)
+  const sectionsRef = useRef([])
+  const socialLinksRef = useRef([])
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    
+    gsap.registerPlugin(ScrollTrigger)
+    
+    const footer = footerRef.current
+    if (!footer) return
+
+    // Animação do footer ao entrar na viewport
+    gsap.fromTo(footer,
+      {
+        opacity: 0,
+        y: 50,
+      },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: footer,
+          start: 'top 85%',
+          toggleActions: 'play none none none',
+        },
+      }
+    )
+
+    // Animação stagger para as seções
+    const sections = sectionsRef.current.filter(Boolean)
+    if (sections.length > 0) {
+      gsap.fromTo(sections,
+        {
+          opacity: 0,
+          y: 30,
+        },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          stagger: 0.2,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: footer,
+            start: 'top 85%',
+            toggleActions: 'play none none none',
+          },
+        }
+      )
+    }
+
+    // Animação simples para os links sociais
+    const socialLinks = socialLinksRef.current.filter(Boolean)
+    if (socialLinks.length > 0) {
+      gsap.fromTo(socialLinks,
+        {
+          opacity: 0,
+          y: 20,
+        },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.6,
+          stagger: 0.1,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: footer,
+            start: 'top 85%',
+            toggleActions: 'play none none none',
+          },
+        }
+      )
+    }
+  }, [])
 
   const handleLinkClick = (e, elementId) => {
     e.preventDefault()
@@ -11,16 +91,16 @@ function Footer() {
   }
 
   return (
-    <footer className="footer">
+    <footer ref={footerRef} className="footer">
       <div className="footer-container">
         <div className="footer-content">
-          <div className="footer-section">
+          <div ref={(el) => (sectionsRef.current[0] = el)} className="footer-section">
             <h3>{SITE_NAME}</h3>
             <p>{PERSONAL_INFO.description}</p>
             <p className="footer-university">🎓 {PERSONAL_INFO.university}</p>
           </div>
 
-          <div className="footer-section">
+          <div ref={(el) => (sectionsRef.current[1] = el)} className="footer-section">
             <h4>Navegação</h4>
             <ul>
               <li>
@@ -46,11 +126,12 @@ function Footer() {
             </ul>
           </div>
 
-          <div className="footer-section">
+          <div ref={(el) => (sectionsRef.current[2] = el)} className="footer-section">
             <h4>Redes Sociais</h4>
             <div className="footer-social">
               {SOCIAL_LINKS.instagram && (
                 <a
+                  ref={(el) => (socialLinksRef.current[0] = el)}
                   href={SOCIAL_LINKS.instagram}
                   target="_blank"
                   rel="noopener noreferrer"
@@ -64,6 +145,7 @@ function Footer() {
               )}
               {SOCIAL_LINKS.linkedin && (
                 <a
+                  ref={(el) => (socialLinksRef.current[1] = el)}
                   href={SOCIAL_LINKS.linkedin}
                   target="_blank"
                   rel="noopener noreferrer"
@@ -77,6 +159,7 @@ function Footer() {
               )}
               {SOCIAL_LINKS.behance && (
                 <a
+                  ref={(el) => (socialLinksRef.current[2] = el)}
                   href={SOCIAL_LINKS.behance}
                   target="_blank"
                   rel="noopener noreferrer"

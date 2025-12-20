@@ -1,8 +1,10 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
+import { gsap } from 'gsap'
 import './BackToTop.css'
 
 function BackToTop() {
   const [isVisible, setIsVisible] = useState(false)
+  const buttonRef = useRef(null)
 
   useEffect(() => {
     let rafId = null
@@ -13,7 +15,39 @@ function BackToTop() {
       }
       
       rafId = requestAnimationFrame(() => {
-        setIsVisible((window.scrollY || window.pageYOffset) > 300)
+        const shouldBeVisible = (window.scrollY || window.pageYOffset) > 300
+        
+        if (shouldBeVisible !== isVisible) {
+          setIsVisible(shouldBeVisible)
+          
+          // Animação GSAP
+          if (buttonRef.current) {
+            if (shouldBeVisible) {
+              gsap.fromTo(buttonRef.current, 
+                {
+                  opacity: 0,
+                  scale: 0.5,
+                  y: 20,
+                },
+                {
+                  opacity: 1,
+                  scale: 1,
+                  y: 0,
+                  duration: 0.5,
+                  ease: 'back.out(1.7)',
+                }
+              )
+            } else {
+              gsap.to(buttonRef.current, {
+                opacity: 0,
+                scale: 0.5,
+                y: 20,
+                duration: 0.3,
+                ease: 'power2.in',
+              })
+            }
+          }
+        }
       })
     }
 
@@ -26,9 +60,20 @@ function BackToTop() {
         cancelAnimationFrame(rafId)
       }
     }
-  }, [])
+  }, [isVisible])
 
   const scrollToTop = () => {
+    // Animação de clique
+    if (buttonRef.current) {
+      gsap.to(buttonRef.current, {
+        scale: 0.9,
+        duration: 0.1,
+        yoyo: true,
+        repeat: 1,
+        ease: 'power2.inOut',
+      })
+    }
+
     window.scrollTo({
       top: 0,
       behavior: 'smooth',
@@ -47,10 +92,12 @@ function BackToTop() {
 
   return (
     <button
+      ref={buttonRef}
       className={`back-to-top ${isVisible ? 'visible' : ''}`}
       onClick={scrollToTop}
       aria-label="Voltar ao topo"
       type="button"
+      style={{ opacity: isVisible ? 1 : 0, pointerEvents: isVisible ? 'auto' : 'none' }}
     >
       <svg
         width="24"

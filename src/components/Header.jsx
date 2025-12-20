@@ -1,7 +1,9 @@
 import { useState, useEffect, useRef, memo, useCallback } from 'react'
+import { gsap } from 'gsap'
 import { scrollToElement } from '@/utils'
 import { SITE_NAME } from '@/utils/constants'
 import { rafThrottle } from '@/utils/performance'
+import koiSvg from '@/assets/koi.svg'
 import './Header.css'
 
 function Header() {
@@ -11,6 +13,7 @@ function Header() {
   const navLinksRef = useRef([])
   const logoRef = useRef(null)
   const navRef = useRef(null)
+  const koiRef = useRef(null)
   
   const handleNavClick = useCallback((e, elementId) => {
     e.preventDefault()
@@ -100,28 +103,76 @@ function Header() {
     })
   }, [])
 
-  // Garantir que o menu mobile permaneça visível quando aberto
+  // Animação GSAP da carpa girando fixo (rotação no próprio eixo)
+  useEffect(() => {
+    if (!koiRef.current) return
+
+    const koi = koiRef.current
+
+    // Animação de rotação contínua e suave (sentido anti-horário)
+    gsap.to(koi, {
+      rotation: -360,
+      duration: 20, // 20 segundos para uma rotação completa (ajustável)
+      ease: 'none',
+      repeat: -1, // Repetir infinitamente
+    })
+  }, [])
+
+  // Animações GSAP para o menu mobile
   useEffect(() => {
     if (!navRef.current) return
 
     const nav = navRef.current
+    const links = nav.querySelectorAll('.nav-link')
     const isMobile = window.innerWidth <= 768
 
     if (isMenuOpen && isMobile) {
-      // Forçar visibilidade com style direto
+      // Animação GSAP para abrir menu
+      gsap.fromTo(
+        nav,
+        {
+          y: -100,
+          opacity: 0,
+        },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.4,
+          ease: 'power3.out',
+        }
+      )
+
+      // Animação stagger para os links
+      gsap.fromTo(
+        links,
+        {
+          y: -20,
+          opacity: 0,
+        },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.3,
+          stagger: 0.1,
+          delay: 0.2,
+          ease: 'power2.out',
+        }
+      )
+
+      // Forçar visibilidade com style direto (fallback)
       nav.style.setProperty('transform', 'translateY(0)', 'important')
       nav.style.setProperty('opacity', '1', 'important')
       nav.style.setProperty('visibility', 'visible', 'important')
       nav.style.setProperty('display', 'flex', 'important')
       nav.style.setProperty('z-index', '1002', 'important')
       nav.style.setProperty('pointer-events', 'all', 'important')
-
-      // Garantir que os links também estejam visíveis
-      const links = nav.querySelectorAll('.nav-link')
-      links.forEach(link => {
-        link.style.setProperty('opacity', '1', 'important')
-        link.style.setProperty('visibility', 'visible', 'important')
-        link.style.setProperty('transform', 'none', 'important')
+    } else if (!isMenuOpen && isMobile) {
+      // Animação GSAP para fechar menu
+      gsap.to(nav, {
+        y: -100,
+        opacity: 0,
+        duration: 0.3,
+        ease: 'power2.in',
       })
     }
   }, [isMenuOpen])
@@ -145,10 +196,9 @@ function Header() {
             className="header-logo"
           >
             <div className="logo-icon">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z" fill="currentColor"/>
-                <path d="M8 12l2 2 4-4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
-              </svg>
+              <div ref={koiRef} className="koi-wrapper">
+                <img src={koiSvg} alt="Koi" className="koi-icon" />
+              </div>
             </div>
             <span className="logo-text">{SITE_NAME}</span>
           </a>

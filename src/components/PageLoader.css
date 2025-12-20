@@ -1,0 +1,150 @@
+.page-loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100vw;
+  height: 100vh;
+  background: 
+    radial-gradient(ellipse at top, rgba(198, 40, 40, 0.95) 0%, rgba(198, 40, 40, 0.9) 50%),
+    radial-gradient(ellipse at bottom, rgba(249, 168, 37, 0.95) 0%, rgba(249, 168, 37, 0.9) 50%),
+    linear-gradient(135deg, #C62828 0%, #E53935 25%, #F9A825 50%, #FFB300 75%, #FFC107 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 99999 !important;
+  overflow: hidden;
+  pointer-events: all;
+  isolation: isolate;
+}
+
+.page-loader::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(ellipse at 20% 20%, rgba(255, 255, 255, 0.15) 0%, transparent 40%),
+    radial-gradient(ellipse at 80% 80%, rgba(255, 213, 79, 0.2) 0%, transparent 40%),
+    radial-gradient(ellipse at center, rgba(255, 255, 255, 0.05) 0%, transparent 60%);
+  animation: shimmer 4s ease-in-out infinite;
+  opacity: 0.8;
+}
+
+@keyframes shimmer {
+  0%, 100% {
+    opacity: 0.6;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+}
+
+.loader-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  text-align: center;
+}
+
+.loader-koi {
+  width: 120px;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  filter: drop-shadow(0 4px 20px rgba(0, 0, 0, 0.3));
+}
+
+.koi-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transform-origin: center center;
+}
+
+.loader-text {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: white;
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  font-family: 'Noto Serif JP', serif;
+  letter-spacing: 0.05em;
+}
+
+.loader-progress-container {
+  width: 300px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 2px;
+  overflow: hidden;
+  position: relative;
+}
+
+.loader-progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #FFFFFF, #FFD54F, #FFFFFF);
+  border-radius: 2px;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+  position: relative;
+}
+
+.loader-progress-bar::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+  animation: progressShine 1.5s ease-in-out infinite;
+}
+
+@keyframes progressShine {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .loader-koi {
+    width: 100px;
+    height: 100px;
+  }
+
+  .loader-text {
+    font-size: 2rem;
+  }
+
+  .loader-progress-container {
+    width: 250px;
+  }
+}
+
+@media (max-width: 480px) {
+  .loader-koi {
+    width: 80px;
+    height: 80px;
+  }
+
+  .loader-text {
+    font-size: 1.5rem;
+  }
+
+  .loader-progress-container {
+    width: 200px;
+  }
+}
+

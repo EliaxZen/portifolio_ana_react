@@ -1,5 +1,8 @@
 import { useEffect, useRef } from 'react'
+import { gsap } from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { PERSONAL_INFO } from '@/utils/constants'
+import { staggerFadeInUp, fadeInUp, scaleIn } from '@/utils/gsapAnimations'
 import AnimatedSection from '@/components/AnimatedSection'
 import './About.css'
 
@@ -20,7 +23,30 @@ function About() {
   ]
 
   useEffect(() => {
-    // Garantir visibilidade inicial
+    if (typeof window === 'undefined') return
+    gsap.registerPlugin(ScrollTrigger)
+
+    // Animação GSAP para skills com stagger
+    const skills = skillsRef.current.filter(Boolean)
+    if (skills.length > 0 && skillsContainerRef.current) {
+      staggerFadeInUp(skills, {
+        delay: 0.2,
+        stagger: 0.08,
+        y: 30,
+        trigger: skillsContainerRef.current,
+      })
+
+    }
+
+    // Animação para educação
+    if (educationRef.current) {
+      scaleIn(educationRef.current, {
+        delay: 0.3,
+        trigger: educationRef.current,
+      })
+    }
+
+    // Garantir visibilidade inicial (fallback)
     skillsRef.current.forEach(skill => {
       if (skill) {
         skill.style.opacity = '1'

@@ -1,8 +1,12 @@
+import { useEffect, useRef } from 'react'
+import { staggerFadeInUp, scaleIn } from '@/utils/gsapAnimations'
 import ProjectCard from '@/components/ProjectCard'
 import AnimatedSection from '@/components/AnimatedSection'
 import './Projects.css'
 
 function Projects() {
+  const projectsGridRef = useRef(null)
+
   // Exemplos de projetos - substitua pelos projetos reais da Ana
   const projects = [
     {
@@ -55,6 +59,22 @@ function Projects() {
     },
   ]
 
+  useEffect(() => {
+    // Animação GSAP para os cards de projetos com stagger
+    if (projectsGridRef.current) {
+      const projectCards = projectsGridRef.current.querySelectorAll('.project-card')
+      if (projectCards.length > 0) {
+        staggerFadeInUp(projectCards, {
+          delay: 0.2,
+          stagger: 0.1,
+          y: 50,
+          scale: 0.95,
+          trigger: projectsGridRef.current,
+        })
+      }
+    }
+  }, [])
+
   return (
     <section id="projetos" className="projects">
       <div className="projects-container">
@@ -68,7 +88,7 @@ function Projects() {
           </div>
         </AnimatedSection>
 
-        <div className="projects-grid">
+        <div ref={projectsGridRef} className="projects-grid">
           {projects.map((project, index) => (
             <AnimatedSection key={project.id} delay={index * 100}>
               <ProjectCard project={project} />

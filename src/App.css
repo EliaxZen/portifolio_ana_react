@@ -3,6 +3,8 @@
   display: flex;
   flex-direction: column;
   padding-top: 80px; /* Espaço para o header fixo */
+  position: relative;
+  z-index: 1;
 }
 
 /* Scroll suave entre seções */
